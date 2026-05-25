@@ -9,7 +9,14 @@ st.set_page_config(
 )
 
 # Title
-st.title("📊 Sales & Revenue Analysis Dashboard")
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #1f77b4;'>
+    📊 Sales & Revenue Analysis Dashboard
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 
 # Upload File
 uploaded_file = st.file_uploader(
@@ -121,6 +128,15 @@ if uploaded_file is not None:
     st.subheader("📋 Dataset")
 
     st.dataframe(filtered_df)
+
+    csv = filtered_df.to_csv(index=False).encode("utf-8")
+
+    st.download_button(
+        "Download Report",
+        csv,
+        "sales_report.csv",
+        "text/csv"
+    )
 
 else:
     st.info("Please upload a CSV or Excel file.")
